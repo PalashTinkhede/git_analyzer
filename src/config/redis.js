@@ -24,6 +24,18 @@ redis.on('ready',        ()    => console.log('✅ Redis ready'));
 redis.on('error',        (err) => console.warn('⚠️  Redis error (app continues without cache):', err.message));
 redis.on('reconnecting', ()    => console.log('🔄 Redis reconnecting...'));
 
+// Test connection immediately on startup without crashing the app if it fails
+redis.ping()
+  .then(() => {
+    console.log('✅ Redis connection verified successfully (ping OK)');
+  })
+  .catch(err => {
+    console.warn('⚠️  Redis connection verification failed on startup:', err.message);
+    if (redisUrl.startsWith('redis://') && redisUrl.includes('red-')) {
+      console.warn('💡 Tip: Your URL starts with "redis://". Render managed Redis often requires TLS. Try using the secure internal URL starting with "rediss://" (with two "s"s) from your Render dashboard.');
+    }
+  });
+
 // ── HELPER FUNCTIONS ──────────────────────────────────────────────────────────
 // All wrapped in try/catch so a Redis failure never crashes the app.
 // If Redis is down: gets return null, sets are silently skipped.
