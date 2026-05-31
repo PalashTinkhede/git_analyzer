@@ -1,0 +1,182 @@
+{
+  "info": {
+    "_postman_id": "c5216c40-524d-41cf-844d-eb077c7d74e6",
+    "name": "github_analysis",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18845315",
+    "_collection_link": "https://go.postman.co/collection/18845315-c5216c40-524d-41cf-844d-eb077c7d74e6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "home",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "add_user_in _database",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/analyze/octocat",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "analyze",
+            "octocat"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "compare_user",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/compare?a=palashtinkhede&b=palash-tinkhede",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "compare"
+          ],
+          "query": [
+            {
+              "key": "a",
+              "value": "palashtinkhede"
+            },
+            {
+              "key": "b",
+              "value": "palash-tinkhede"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get_particular_user",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/profiles/palashtinkhede",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "profiles",
+            "palashtinkhede"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "cache_stats",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/cache/stats",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "cache",
+            "stats"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get_all_users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/profiles",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "profiles"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete_profile_from_database_and_cache",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/profiles/octocat",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "profiles",
+            "octocat"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete_user_from_cache",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/cache/octocat",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "cache",
+            "octocat"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

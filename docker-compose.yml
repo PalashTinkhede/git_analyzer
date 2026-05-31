@@ -1,0 +1,65 @@
+services:
+
+  # ── MySQL Database ──────────────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: github_analyzer_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-palash123}
+      MYSQL_DATABASE: ${DB_NAME:-github_analyzer}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${DB_PASSWORD:-palash123}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── Redis Cache ──────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: github_analyzer_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── Node.js Application ───────────────────────────────────────────────────────
+  app:
+    build: .
+    platform: linux/amd64
+    container_name: github_analyzer_app
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=${DB_HOST:-mysql}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-palash123}
+      - DB_NAME=${DB_NAME:-github_analyzer}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - REDIS_TTL_GITHUB=${REDIS_TTL_GITHUB:-3600}
+      - REDIS_TTL_DB_SINGLE=${REDIS_TTL_DB_SINGLE:-600}
+      - REDIS_TTL_DB_LIST=${REDIS_TTL_DB_LIST:-300}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  redis_data:
